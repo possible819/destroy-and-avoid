@@ -1,7 +1,21 @@
 @import 'reset-css';
+@import './_variables.scss';
 
-html, body {
+html,
+body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #131819;
+
+  main {
+    width: 100vw;
+    max-width: $screen-max-width;
+    max-height: 100vh;
+  }
 }

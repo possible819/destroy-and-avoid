@@ -5,6 +5,8 @@ import { MissileController } from './missile-controller'
 import { EnemyController } from './enemy-controller'
 
 export class GameController {
+  private readonly FLIGHT_SPEED = 3
+
   private context: CanvasRenderingContext2D
 
   private backgroundController: BackgroundController
@@ -13,12 +15,14 @@ export class GameController {
   private missileController: MissileController
   private keyController: KeyController
 
-  private readonly FLIGHT_SPEED = 3
-
   constructor(private readonly canvas: HTMLCanvasElement) {
-    this.adjustCanvasSize()
+    const mainElement = document.querySelector('main')
+    if (!mainElement) throw new Error('Failed to find main element')
+
     const canvasContext = canvas.getContext('2d')
     if (!canvasContext) throw new Error('Failed to initialized canvas context')
+
+    this.adjustCanvasSize()
     this.context = canvasContext
     this.backgroundController = new BackgroundController(this.context)
     this.flightController = new FlightController(this.context)
@@ -30,8 +34,14 @@ export class GameController {
   }
 
   private adjustCanvasSize() {
-    this.canvas.width = window.innerWidth
-    this.canvas.height = window.innerHeight
+    const screenMaxWidth = getComputedStyle(
+      document.documentElement,
+    ).getPropertyValue('--screen-max-width')
+    this.canvas.width = Math.min(
+      document.body.clientWidth,
+      Number(screenMaxWidth.replace(/px$/, '')),
+    )
+    this.canvas.height = (Math.min(this.canvas.width) / 9) * 16
   }
 
   private clearCanvas() {

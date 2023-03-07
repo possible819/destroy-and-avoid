@@ -1,0 +1,5 @@
+$screen-max-width: 400px;
+
+:root {
+  --screen-max-width: #{$screen-max-width};
+}

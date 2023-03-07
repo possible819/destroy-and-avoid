@@ -3,7 +3,9 @@ import './assets/styles/global.scss'
 
 const bootstrap = () => {
   const canvasElement = document.createElement('canvas')
-  document.body.append(canvasElement)
+  const mainElement = document.querySelector<HTMLElement>('main')
+  if (!mainElement) throw new Error('Failed to find main element')
+  mainElement.append(canvasElement)
   new GameController(canvasElement)
 }
 
